@@ -1,0 +1,10 @@
+/trade-examples/target/test-classes/com/jianrc/trade/okcoin/tmp/*.class
+*.class
+target
+TRADE_HOME_IS_UNDEFINED
+*.bak
+*.log
+.classpath
+.project
+.settings
+/protoc.exe
