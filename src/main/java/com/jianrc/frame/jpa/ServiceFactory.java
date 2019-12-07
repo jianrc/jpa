@@ -99,6 +99,8 @@ public class ServiceFactory {
 						
 						//Monitor.addOne(err_+ logic_ + invoke_);
 						//Monitor.addOne(err_+ logic_ + invoke_ + className + "." + methodName);
+						
+						LOG.error("", e);
 						throw e.getCause();
 					}catch(Throwable e){
 						for (int i = 0; i < ems.length; i++) {
@@ -108,6 +110,8 @@ public class ServiceFactory {
 						
 						//Monitor.addOne(fail_+ logic_);
 						//Monitor.addOne(fail_+ logic_ + className + "." + methodName);
+						
+						LOG.error("", e);
 						throw e;
 					}finally{
 						for (int i = 0; i < ems.length; i++) {
@@ -123,8 +127,10 @@ public class ServiceFactory {
 					try{
 						return method.invoke(impl, args);
 					}catch(InvocationTargetException e){
+						LOG.error("", e);
 						throw e.getCause();
 					}catch(Throwable e){
+						LOG.error("", e);
 						throw e;
 					}
 				}
