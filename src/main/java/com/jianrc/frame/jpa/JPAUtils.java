@@ -480,14 +480,6 @@ public class JPAUtils {
         return new Sheet<T>(rowcount, query.getResultList());
     }
 
-    /**
-     *  鐢熸垚鏉′欢璇彞
-     *
-     * @param and  鏄惁鐢╝nd鍏宠仈
-     * @param names  瀛楁鍚嶆暟缁�
-     * @param params  瀛楁瀵瑰簲鐨勫�兼暟缁�
-     * @return
-     */
     private static String genProtasisString(final String alias, final QuerySift field, final Object... params) {
         final QuerySiftColumn[] names = field.value();
         final String u = field.and() ? " AND " : " OR ";
@@ -517,14 +509,6 @@ public class JPAUtils {
         return protasis.toString();
     }
 
-    /**
-     *  鐢熸垚鏉′欢璇彞
-     *
-     * @param and  鏄惁鐢╝nd鍏宠仈
-     * @param names  瀛楁鍚嶆暟缁�
-     * @param params  瀛楁瀵瑰簲鐨勫�兼暟缁�
-     * @return
-     */
     private static String genKeyProtasisString(final String alias, final String[] names, final Object... params) {
         StringBuilder protasis = new StringBuilder(64);
         int length = params.length;
@@ -563,27 +547,10 @@ public class JPAUtils {
         return "alias_" + entityClass.getSimpleName().toLowerCase();
     }
 
-    /**
-     * 杩斿洖鏍规嵁IdKeyField瀹氫箟鐨勪富閿�艰幏鍙栬褰�
-     *
-     * @param <T>
-     * @param entityClass  Entity绫�
-     * @param pks UniqueSift 瀵瑰簲瀛楁鐨勫��
-     * @return
-     */
     public static <T> T findByIdKey(EntityManager em,final Class<T> entityClass, final Object... pks) {
         return findByIdKey(em,entityClass, 0, pks);
     }
 
-    /**
-     *  杩斿洖鏍规嵁IdKeyField瀹氫箟鐨勪富閿�艰幏鍙栬褰�
-     *
-     * @param <T>
-     * @param entityClass Entity绫�
-     * @param index  IdKeyField鍦↖dKeyFields涓殑搴忓彿, 0寮�濮�
-     * @param pks UniqueSift 瀵瑰簲瀛楁鐨勫��
-     * @return
-     */
     public static <T> T findByIdKey(EntityManager em,final Class<T> entityClass, final int index, final Object... pks) {
         final UniqueSift field = parseIdKey(entityClass, index);
         final String alias = genTableAlias(entityClass);
@@ -631,14 +598,6 @@ public class JPAUtils {
         return list.isEmpty() ? null : list.get(0);
     }
 
-    /**
-     *  鏍规嵁涓婚敭鍊兼煡鎵惧崟鏉¤褰�
-     *
-     * @param <T>
-     * @param entityClass Entity绫�
-     * @param pk  涓婚敭鍊�
-     * @return
-     */
     public static <T> T find(EntityManager em,Class<T> entityClass, Serializable pk) {
         T o = em.find(entityClass, pk);
         //try{
@@ -647,12 +606,6 @@ public class JPAUtils {
         return o;
     }
 
-    /**
-     *  鏂板Entity瀹炰綋
-     *
-     * @param <T>
-     * @param entitys  Entity瀹炰綋鏁扮粍
-     */
     public static <T extends Serializable> void insert(EntityManager em,T... entitys) {
         for (final Object entity : entitys) {
             if (entity.getClass().isArray()) {
@@ -666,24 +619,12 @@ public class JPAUtils {
         }
     }
 
-    /**
-     *  鏂板Entity瀹炰綋
-     *
-     * @param <T>
-     * @param entitys  Entity瀹炰綋鏁扮粍
-     */
     public static <T extends Serializable> void insert(EntityManager em,Collection<T> entitys) {
         for (final Object entity : entitys) {
             em.persist(entity);
         }
     }
 
-    /**
-     *  鏇存柊Entity瀹炰綋
-     *
-     * @param <T>
-     * @param entitys Entity瀹炰綋鏁扮粍
-     */
     public static <T extends Serializable> void update(EntityManager em,T... entitys) {
         for (final Object entity : entitys) {
             if (entity.getClass().isArray()) {
@@ -696,25 +637,12 @@ public class JPAUtils {
         }
     }
 
-    /**
-     *  鏇存柊Entity瀹炰綋
-     *
-     * @param <T>
-     * @param entitys Entity瀹炰綋鏁扮粍
-     */
     public static <T extends Serializable> void update(EntityManager em,Collection<T> entitys) {
         for (final Object entity : entitys) {
             em.merge(entity);
         }
     }
 
-    /**
-     *  鍒犻櫎涓婚敭瀵瑰簲鐨勮褰�
-     *
-     * @param <T>
-     * @param clazz  Entity绫�
-     * @param pks 涓婚敭鍊兼暟缁�
-     */
     public static <T, E extends Serializable> void delete(EntityManager em,Class<T> clazz, Collection<E> pks) {
         Object entity = null;
         for (final Object pk : pks) {
@@ -730,13 +658,6 @@ public class JPAUtils {
         em.remove(obj);
     }
     
-    /**
-     *  鍒犻櫎涓婚敭瀵瑰簲鐨勮褰�
-     *
-     * @param <T>
-     * @param clazz  Entity绫�
-     * @param pks 涓婚敭鍊兼暟缁�
-     */
     public static <T, E extends Serializable> void delete(EntityManager em,Class<T> clazz, E... pks) {
         Object entity = null;
         for (final Object pk : pks) {
